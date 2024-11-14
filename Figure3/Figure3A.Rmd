@@ -1,0 +1,6 @@
+VEP_4plot <- read.table("./CodingSNP0.7_EAD_WED_VEP_4plot.txt",header=T)
+
+VEP_4plot <- VEP_4plot %>% arrange(desc(Type)) %>% mutate(lab.ypos = cumsum(Prop) - 0.5*Prop)
+
+
+ggplot(VEP_4plot, aes(x = "", y = Num, fill = Type)) +geom_bar(width = 1, stat = "identity", color = "white") + coord_polar("y", start = 0)+ geom_text(aes(y = lab.ypos, label = Prop), color = "white")+ scale_fill_manual(values = c("#53B3E9","#E39500","#868686", "#CD534C")) +  theme_void()
