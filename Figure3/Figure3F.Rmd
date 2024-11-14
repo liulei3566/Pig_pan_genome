@@ -1,0 +1,35 @@
+library(gplots)
+library(pheatmap)
+pdf("chr3:39630000-39780000.pdf",width=8,height=6)
+
+a<-read.table("chr3:39630000-39780000.snp.matrix5", header=T, sep="\t",row.names="POS")
+da<-as.matrix(a)
+
+rowgroup=read.table("group.txt",sep="\t",header=F,row.names=1,check.names=F,quote="")
+colnames(rowgroup)=c("Group")
+ann_colors = list(Group = c(EAD ="#E39500",EAW= "#FF0000",WED= "#57B5E8",WEW="#0000FF"))
+
+
+pheatmap (da, 
+	cluster_rows =F, 
+	cluster_cols =F, 
+	cellwidth = 1.88,  
+	cellheight = 0.36, 
+	fontsize=12,
+	fontsize_row=12,
+	legend = TRUE,
+	border_color=NA,  
+	show_colnames=F,
+	show_rownames=F,
+	annotation_row=rowgroup,
+	annotation_colors = ann_colors,
+	color = colorRampPalette(c("#53B3E9", "#E39500", "#CD534C","#868686"))(4),
+	gaps_row = c(557, 597,912),
+	legend_breaks = c(0:3), legend_labels = c("Ref","Alt","Het","Miss")
+)
+
+
+
+
+dev.off()
+
