@@ -1,0 +1,17 @@
+library(ggplot2)          
+inputFile="input.xls" 
+outFile="SV.boundary.TE.Median.pdf" 
+rt=read.table(inputFile,header=T,sep="\t") 
+pdf(file=outFile, width=6, height=5)
+ggplot(rt,aes(Region,Median,group=Type,color=Type))+
+	geom_point(size=4)+
+	geom_line(position = position_dodge(0.1),cex=1.3)+
+	scale_color_manual(values = c("#53B3E9", "#E39500"))+
+	labs(x='SV boundary',y='Median of total length')+
+	scale_y_continuous(limits = c(40,280),expand = c(0,0),breaks = c(40,80,120,160,200,240,280),label = c(40,80,120,160,200,240,280))+
+	theme_test(base_size = 15)+
+	theme(legend.title = element_blank(),
+        legend.position = c(.2,.9),
+        legend.direction = "horizontal")
+
+dev.off()
