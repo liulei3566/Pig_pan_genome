@@ -1,0 +1,17 @@
+# BUSCO version is: 5.3.2 
+# The lineage dataset is: mammalia_odb10 (Creation date: 2021-02-19, number of genomes: 24, number of BUSCOs: 9226)
+# Summarized benchmarking in BUSCO notation for file /home/lijiang/03/project/4_pig_genome/04.annotation/TT/02.gene/final_gene/TT.pep
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:97.5%[S:97.1%,D:0.4%],F:0.6%,M:1.9%,n:9226	   
+	9000	Complete BUSCOs (C)			   
+	8963	Complete and single-copy BUSCOs (S)	   
+	37	Complete and duplicated BUSCOs (D)	   
+	57	Fragmented BUSCOs (F)			   
+	169	Missing BUSCOs (M)			   
+	9226	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.1
