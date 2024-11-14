@@ -1,0 +1,4 @@
+BRCA1 <- read.table("./BRCA1_SNP19812845_freq.txt",header=T)
+BRCA1$Group <- factor(BRCA1$Group,levels=c("EAD","WED","N","TC","LDR"))
+
+ggplot(data=BRCA1, aes(x=Group, y=Freq, fill=Allele)) + geom_bar(stat="identity",color="black",width=0.8) + scale_fill_manual(values=c("#53B3E9","#E39500")) + theme_bw() + theme(axis.text = element_text(size=12),panel.grid.minor = element_blank())
