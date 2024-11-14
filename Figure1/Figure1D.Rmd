@@ -1,0 +1,14 @@
+df <- read.table("F1D.input.xls",header=T,sep='\t')
+library(ggplot2)
+pdf(file ="F1D.pdf",width=6,height=5.5)
+p <- ggplot(df,aes(Feature,Content,fill=Type))
+#p+geom_bar(stat = 'identity')
+p+geom_bar(stat = 'identity',width=0.5,position="dodge")+
+  geom_text(aes(label=Content),position=position_dodge(0.9),vjust=0.2,hjust=-0.2)+
+  coord_flip()+
+	scale_y_continuous(expand = c(0,0),limits = c(0,1),breaks=seq(0,1,0.2))+
+ theme_bw()+
+theme(panel.grid=element_blank())+
+scale_fill_manual(values = c("Duroc"="#E39500","Novel"="#53B3E9")) 
+
+dev.off()
