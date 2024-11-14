@@ -1,0 +1,1 @@
+Type	Num	Propothers	6	0.606060606splice_region_variant	19	1.919191919missense_variant	339	34.24242424synonymous_variant	626	63.23232323
