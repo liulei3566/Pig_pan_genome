@@ -1,0 +1,57 @@
+library(data.table)
+
+WED <- read.table("./WED_Signals_BRCA1.txt",header=F)
+WED2 <- as.data.table(WED[,2,drop=F])
+WED2<- na.omit(WED2[, `:=`(rollN = frollmean(V2, n = 1, align = "center"), idx = .I)])
+
+WED_plot <- ggplot(WED2, aes(x=idx, y=rollN)) + geom_line(group=1,lwd=1.2) + theme_bw()  + coord_cartesian(xlim=c(1,50),ylim=c(0,1000)) + geom_hline(yintercept = c(45.88593,10.2641),lwd=1.0,lty="dashed",color=c("red","#CC79A7")) + scale_x_continuous(expand = c(0, 1),breaks = c(1, 10, 20,30,40,50),labels=c("19.5","19.6","19.7","19.8","19.9","20.0")) + theme(axis.text=element_text(size=12),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),legend.position="none")
+
+WEW <- read.table("./WEW_Signals_BRCA1.txt",header=F)
+WEW2 <- as.data.table(WEW[,2,drop=F])
+WEW2<- na.omit(WEW2[, `:=`(rollN = frollmean(V2, n = 1, align = "center"), idx = .I)])
+WEW_plot <- ggplot(WEW2, aes(x=idx, y=rollN)) + geom_line(group=1,lwd=1.2) + theme_bw()  + coord_cartesian(xlim=c(1,50),ylim=c(0,200)) + geom_hline(yintercept = c(196.4328,41.92513),lwd=1.0,lty="dashed",color=c("red","#CC79A7")) + scale_x_continuous(expand = c(0, 1),breaks = c(1, 10, 20,30,40,50),labels=c("19.5","19.6","19.7","19.8","19.9","20.0")) + theme(axis.text=element_text(size=12),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),legend.position="none")
+
+EAD <- read.table("./EAD_Signals_BRCA1.txt",header=F)
+EAD2 <- as.data.table(EAD[,2,drop=F])
+EAD2<- na.omit(EAD2[, `:=`(rollN = frollmean(V2, n = 1, align = "center"), idx = .I)])
+EAD_plot <- ggplot(EAD2, aes(x=idx, y=rollN)) + geom_line(group=1,lwd=1.2) + theme_bw()  + coord_cartesian(xlim=c(1,50),ylim=c(0,16)) + geom_hline(yintercept = c(11.57934,3.98728),lwd=1.0,lty="dashed",color=c("red","#CC79A7")) + scale_x_continuous(expand = c(0, 1),breaks = c(1, 10, 20,30,40,50),labels=c("19.5","19.6","19.7","19.8","19.9","20.0")) + theme(axis.text=element_text(size=12),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),legend.position="none")
+
+EAW <- read.table("./EAW_Signals_BRCA1.txt",header=F)
+EAW2 <- as.data.table(EAW[,2,drop=F])
+EAW2<- na.omit(EAW2[, `:=`(rollN = frollmean(V2, n = 1, align = "center"), idx = .I)])
+EAW_plot <- ggplot(EAW2, aes(x=idx, y=rollN)) + geom_line(group=1,lwd=1.2) + theme_bw()  + coord_cartesian(xlim=c(1,50),ylim=c(0,16)) + geom_hline(yintercept = c(15.30345,4.68515),lwd=1.0,lty="dashed",color=c("red","#CC79A7")) + scale_x_continuous(expand = c(0, 1),breaks = c(1, 10, 20,30,40,50),labels=c("19.5","19.6","19.7","19.8","19.9","20.0")) + theme(axis.text=element_text(size=12),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),legend.position="none")
+
+library(cowplot)
+plot_grid(EAD_plot, EAW_plot, WED_plot, WEW_plot, ncol=1, nrow=4,align="v")
+
+library(gplots)
+library(pheatmap)
+pdf("BRCA1.pdf",width=10,height=9)
+
+a<-read.table("snp.matrix", header=T, sep="\t",row.names="POS")
+da<-as.matrix(a)
+
+rowgroup=read.table("group.txt",sep="\t",header=F,row.names=1,check.names=F,quote="")
+colnames(rowgroup)=c("Group")
+ann_colors = list(Group = c(EAD ="#E39500",EAW= "#FF0000",WED= "#57B5E8",WEW="#0000FF"))
+
+pheatmap (da, 
+	cluster_rows =F, 
+	cluster_cols =F, 
+	cellwidth = 0.8,  
+	cellheight = 0.6, 
+	fontsize=12,
+	fontsize_row=12,
+	legend = TRUE,
+	border_color=NA,  
+	show_colnames=F,
+	show_rownames=F,
+	annotation_row=rowgroup,
+	annotation_colors = ann_colors,
+	color = colorRampPalette(c("#53B3E9", "#E39500", "#CD534C","#868686"))(4),
+	gaps_row = c(557, 597,912),
+	legend_breaks = c(0:3), legend_labels = c("Ref","Alt","Het","Miss")
+)
+
+dev.off()
+
