@@ -1,0 +1,11 @@
+Feature	Count	Type
+Promoter	3925	Hyper
+Exon	2494	Hyper
+Intron	15605	Hyper
+TE	31341	Hyper
+Intergenic	2117	Hyper
+Promoter	1570	Hypo
+Exon	4002	Hypo
+Intron	32657	Hypo
+TE	64809	Hypo
+Intergenic	3297	Hypo
