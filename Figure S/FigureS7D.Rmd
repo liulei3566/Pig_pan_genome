@@ -1,0 +1,4 @@
+pop <- read.table("./3Genes_frq.txt",header=T)
+pop$Breeds <- factor(pop$Breeds, levels = rev(c("BMA","BS","DB","DHB","DNS","DS","EHL","GAZH","GEH","GIZH","GLG","HJ","HUZ","JH","LC","LT","LWU","MBH","MES","MGE","TC","TT","TUC","WNH","WZS","AW","BKS","DRC","LDR","LW","PTR","YCTM","EW")))
+pop$Genotype <- factor(pop$Genotype, levels = c("Ref","Alt"))
+ggplot(data=subset(pop,Genes=="ABCA3"), aes(x=Breeds, y=Freq,fill=Genotype)) + geom_bar(stat="identity", color=NA,width = 0.6) + scale_fill_manual(values=c("#53B3E9","#E39500")) + theme(panel.grid.major.x = element_line(colour = "grey"),panel.background = element_rect(fill = NA)) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),axis.title=element_text(size=14,face="bold"), axis.text=element_text(size=12),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),legend.position="none") + coord_flip()
