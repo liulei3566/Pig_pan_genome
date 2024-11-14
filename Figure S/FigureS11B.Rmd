@@ -1,0 +1,39 @@
+library('DESeq2')
+library("pheatmap")
+library("genefilter")
+library('RColorBrewer')
+library('gplots')
+library('pvclust')
+library('ggplot2')
+
+data <- read.delim("rlog_rld1500.txt",row.names=1)
+row_anno <- read.delim("row_anno.txt",row.names=1)
+col_anno <- read.delim("col_anno.txt",row.names=1)
+
+cor(data)
+
+
+exprTable_t <- as.data.frame(t(cor(data)))
+col_dist = dist(exprTable_t)
+hclust_1 <- hclust(col_dist)
+
+manual_order = c("LE33_1", "LE33_2", "LE33_3", "LE40_1", "LE40_2", "LE40_3", "LE45_1", "LE45_2", "LE45_3", "LE50_1", "LE50_2", "LE50_3", "LE55_1", "LE55_2", "LE55_3", "LE60_1", "LE60_2", "LE60_3", "LE65_1", "LE65_2", "LE65_3", "LE70_1", "LE70_2", "LE70_3", "LE75_1", "LE75_2", "LE75_3", "LE80_1", "LE80_2", "LE80_3", "LE85_1", "LE85_2", "LE85_3", "LE90_1", "LE90_2", "LE90_3", "LE95_1", "LE95_2", "LE95_3", "LE100_1", "LE100_2", "LE100_3", "LE105_1", "LE105_2", "LE105_3", "LD0_1", "LD0_2", "LD0_3", "LD9_1", "LD9_2", "LD9_3", "LD20_1", "LD20_2", "LD20_3", "LD30_1", "LD30_2", "LD30_3", "LD40_1", "LD40_2", "LD40_3", "LD60_1", "LD60_2", "LD60_3", "LD80_1", "LD80_2", "LD80_3", "LD100_1", "LD100_2", "LD100_3", "LD120_1", "LD120_2", "LD120_3", "LD140_1", "LD140_2", "LD140_3", "LD160_1", "LD160_2", "LD160_3", "LD180_1", "LD180_2", "LD180_3", "TE33_1", "TE33_2", "TE33_3", "TE40_1", "TE40_2", "TE40_3", "TE45_1", "TE45_2", "TE45_3", "TE50_1", "TE50_2", "TE50_3", "TE55_1", "TE55_2", "TE55_3", "TE60_1", "TE60_2", "TE60_3", "TE65_1", "TE65_2", "TE65_3", "TE70_1", "TE70_2", "TE70_3", "TE75_1", "TE75_2", "TE75_3", "TE80_1", "TE80_2", "TE80_3", "TE85_1", "TE85_2", "TE85_3", "TE90_1", "TE90_2", "TE90_3", "TE95_1", "TE95_2", "TE95_3", "TE100_1", "TE100_2", "TE100_3", "TE105_1", "TE105_2", "TE105_3", "TD0_1", "TD0_2", "TD0_3", "TD9_1", "TD9_2", "TD9_3", "TD20_1", "TD20_2", "TD20_3", "TD30_1", "TD30_2", "TD30_3", "TD40_1", "TD40_2", "TD40_3", "TD60_1", "TD60_2", "TD60_3", "TD80_1", "TD80_2", "TD80_3", "TD100_1", "TD100_2", "TD100_3", "TD120_1", "TD120_2", "TD120_3", "TD140_1", "TD140_2", "TD140_3", "TD160_1", "TD160_2", "TD160_3", "TD180_1", "TD180_2", "TD180_3")
+
+
+dend = reorder(as.dendrogram(hclust_1), wts=order(match(manual_order, rownames(exprTable_t))), agglo.FUN = max)
+col_cluster <- as.hclust(dend)
+
+# Specify colors
+ann_colors = list(
+  Type = c(Prenatal = "#6FB960", Postnatal="#FF3CEA"),
+  Stage = c(E33="#ccece6",E40="#66c2a4",E45="#238b45",E50="#00441b",E55="#deebf7",E60="#9ecae1",E65="#6baed6",E70="#2171b5",E75="#08306b",E80="#edeae6",E85="#cbc0b4",
+            E90="#a99782",E95="#876e50",E100="#65441d",E105="#3a2103",D0="#fee391",D9="#fed6a9",D20="#fdc17e",D30="#fe9929",D40="#ec7014",D60="#cc4c02",D80="#f8d6ea",
+            D100="#f1add5",D120="#ea85c0",D140="#e35cab",D160="#dd3497",D180="#b02978"),
+  Breed = c(TC = "#E39500", LDR = "#53B3E9")
+)
+
+#cor and headtmap
+pdf(file="/Users/leiliu/Desktop/pheatmep_cor_rlog_rld1500_order.pdf", width = 23, height = 21)
+pheatmap::pheatmap(cor(data), color=colorRampPalette(rev(brewer.pal(n=7,name="RdBu")))(100), cluster_cols = col_cluster, cluster_rows = col_cluster, annotation_col=col_anno, annotation_row=row_anno, annotation_colors = ann_colors)
+dev.off()
+
