@@ -1,0 +1,62 @@
+library('ggplot2')
+data=read.delim("./ABCA3_log.txt",row.names=1)
+data$Tissue <- factor(data$Tissue, levels=c('Lung', 'Adipose', 'Adrenal', 'Blood', 'Bone', 'Bone.Marrow', 'Brain', 
+                                            'Breast', 'Ear', 'Heart', 'Hypothalamus', 'Kidney', 'Large_Intestine', 
+                                            'Liver', 'Lymph', 'Oocyte', 'Ovary', 'Oviduct', 'Pancreas', 'Pituitary', 
+                                            'Skeletal_Muscle', 'Skin', 'Small_Intestine', 'Spleen', 'Stomach', 
+                                            'Testis', 'Thymus', 'Uterus'))  
+                                            
+#boxplot
+ggplot(data,aes(x=Tissue,y=Log2TPM1,colour=Tissue,group=Tissue))+
+  geom_boxplot(size=0.5,outlier.colour = NA)+ylim(0,10)+
+  scale_color_manual(values=c(Lung="#E39500",Adipose="gray",Adrenal="gray",Blood="gray",Bone="gray",
+                              Bone.Marrow="gray",Brain="gray",Breast="gray",Ear="gray",Heart="gray",
+                              Hypothalamus="gray",Kidney="gray",
+                              Large_Intestine="gray",Liver="gray",Lymph="gray",
+                              Oocyte="gray",Ovary="gray",Oviduct="gray",Pancreas="gray", Pituitary="gray",
+                              Skeletal_Muscle="gray",Skin="gray",Small_Intestine="gray",Spleen="gray",Stomach="gray",Testis="gray",
+                              Thymus="gray",Uterus="gray"))+
+  theme(legend.position = "none",legend.key = element_blank(),
+        axis.text = element_text(color="black"),
+        axis.text.x = element_text(size=12,angle = 45, hjust = 1),
+        axis.text.y = element_text(size=12,angle = 90), 
+        panel.grid.minor = element_blank(),panel.grid.major = element_blank(),
+        panel.background=element_blank(),axis.line = element_line(colour = "black"))
+
+ggsave('./ABCA3_log2(TPM+1)_22.pdf', width=10, height=4)
+
+
+#geom_violin
+ggplot(data,aes(x=Tissue,y=Log2TPM1,colour=Tissue,group=Tissue))+
+  geom_violin(adjust=1)+ylim(0,15)+
+  scale_color_manual(values=c(Lung="#E39500",Adipose="gray",Adrenal="gray",Blood="gray",Bone="gray",
+                              Bone.Marrow="gray",Brain="gray",Breast="gray",Cell="gray",Ear="gray",Embryo="gray",Eye="gray",Heart="gray",
+                              Hypothalamus="gray",Iliac_Endothelial_Cells ="gray", Intestines="gray",Ipsc="gray",Kidney="gray",
+                              Kidney_Cells="gray",Large_Intestine="gray",Liver="gray",Lymph="gray",Muscle="gray", Normal_Fetus="gray",
+                              Oocyte="gray",Ovary="gray",Oviduct="gray",Pancreas="gray", Pituitary="gray",Placenta="gray",
+                              Skeletal_Muscle="gray",Skin="gray",Small_Intestine="gray",Spleen="gray",Stomach="gray",Testis="gray",
+                              Thymus="gray",Uterus="gray"))+
+  theme(legend.position = "none",legend.key = element_blank(),
+        axis.text = element_text(color="black"),
+        axis.text.x = element_text(size=12,angle = 45, hjust = 1),
+        axis.text.y = element_text(size=12,angle = 90), 
+        panel.grid.minor = element_blank(),panel.grid.major = element_blank(),
+        panel.background=element_blank(),axis.line = element_line(colour = "black"))
+
+ggsave('./ABCA3_log2TPM1_violin.pdf', width=10, height=4)
+
+
+
+#ggplot(data,aes(x=Tissue,y=log2TPM,colour=Tissue,group=Tissue))+geom_boxplot(size=0.5)+
+  geom_point(size=1)+ylim(-10,15)+geom_jitter(width=0.3)+
+  theme(legend.position = "top",legend.key = element_blank(),
+        axis.text = element_text(color="black"),
+        axis.text.x = element_text(size=12,angle = 45, hjust = 1),
+        axis.text.y = element_text(size=12,angle = 90), 
+        panel.grid.minor = element_blank(),panel.grid.major = element_blank(),
+        panel.background=element_blank(),axis.line = element_line(colour = "black"))
+#ggsave('./ABCA3.pdf', width=8, height=6)
+
+
+
+  
