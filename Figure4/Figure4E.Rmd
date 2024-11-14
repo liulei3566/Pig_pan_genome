@@ -1,0 +1,11 @@
+SGlst_STP_Exp <- read.table("./SGlst_STP_permutation1000_Exp.txt",header=T)
+SGlst_STP_Obs <- read.table("./SGlst_STP_permutation1000_Obs.txt",header=T)
+
+SGlst_STP_Exp <- melt(SGlst_STP_Exp,value.name = "Exp",variable.name = "Stages")
+SGlst_STP_Obs <- melt(SGlst_STP_Obs,value.name = "Obs",variable.name = "Stages")
+
+SGlst_STP_Exp$Stages <- factor(SGlst_STP_Exp$Stages, levels = c("Prenatal", "Postnatal"))
+SGlst_STP_Obs$Stages <- factor(SGlst_STP_Obs$Stages, levels = c("Prenatal", "Postnatal"))
+
+
+ggplot(data = SGlst_STP_Exp,aes(x=Stages,y=Exp,fill=Stages)) + geom_boxplot(lwd=1.0,fatten=0.8,width=0.8, notch = T, outlier.colour = "gray", position=position_dodge(0.8)) +  theme_bw() + scale_fill_manual(values=c("#53B3E9","#E39500")) + labs(title = "Permutation") + theme(axis.text = element_text(size=12),panel.grid.minor = element_blank()) + geom_point(data=SGlst_STP_Obs, aes(x=Stages,y=Obs), color='#B02978',size=4,shape=18) + coord_cartesian(ylim=c(0,500))
