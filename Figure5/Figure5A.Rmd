@@ -1,0 +1,5 @@
+PCi <- read.table("./RNA_DNAmethyl_corr.txt",header=T,row.names = 1)
+
+PCi$Stages <- factor(PCi$Stages, levels = c('E33','E40','E45','E50','E55','E60','E65','E70','E75','E80','E85','E90','E95','E100','E105','D0','D9','D20','D30','D40','D60','D80','D100','D120','D140','D160','D180'))
+
+ggscatter(PCi, x = "PC2_Methyl", y = "PC2_Expr",fill="Stages",shape="Breeds",size=0.3,palette = c("#ccece6","#66c2a4","#238b45","#00441b","#deebf7","#9ecae1","#6baed6","#2171b5","#08306b","#edeae6","#cbc0b4","#a99782","#876e50","#65441d","#3a2103","#fee391","#fed6a9","#fdc17e","#fe9929","#ec7014","#cc4c02","#f8d6ea","#f1add5","#ea85c0","#e35cab","#dd3497","#b02978"),add = "reg.line", add.params = list(color = "#CC79A7", fill = "lightgray"), conf.int = TRUE,rug = TRUE,ylim=c(-20,20),xlim=c(-200,200)) + stat_cor(method = "pearson", label.x = 3, label.y = 20,digits = 3) + theme_bw() + theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank()) + scale_shape_manual(name="Breeds",values=c(21, 23))
