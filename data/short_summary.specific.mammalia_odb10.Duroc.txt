@@ -1,0 +1,14 @@
+# BUSCO version is: 4.1.4 
+# The lineage dataset is: mammalia_odb10 (Creation date: 2020-09-10, number of species: 9226, number of BUSCOs: 24)
+# Summarized benchmarking in BUSCO notation for file /Disk02/users/lijiang/database/animal/pig/Duroc/Ensembl/BGI_format/best.pep
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:96.6%[S:96.2%,D:0.4%],F:1.0%,M:2.4%,n:9226	   
+	8917	Complete BUSCOs (C)			   
+	8877	Complete and single-copy BUSCOs (S)	   
+	40	Complete and duplicated BUSCOs (D)	   
+	94	Fragmented BUSCOs (F)			   
+	215	Missing BUSCOs (M)			   
+	9226	Total BUSCO groups searched		   
